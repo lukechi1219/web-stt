@@ -4,6 +4,7 @@ function encodeAudio(buffers, settings) {
 
 	logArea.textContent += 'Encoding audio...'
 	logArea.textContent += 'buffer.length: ' + buffers.length
+	logArea.textContent += 'settings: ' + JSON.stringify(settings)
 
 	const sampleCount = buffers.reduce((memo, buffer) => {
 		return memo + buffer.length
@@ -15,6 +16,8 @@ function encodeAudio(buffers, settings) {
 	const bitsPerByte = 8
 	const dataLength = sampleCount * bytesPerSample
 	const sampleRate = settings.sampleRate
+
+	logArea.textContent += 'dataLength: ' + dataLength
 
 	const arrayBuffer = new ArrayBuffer(44 + dataLength)
 
