@@ -1,9 +1,9 @@
 async function main() {
+	const logArea = document.querySelector('#log')
 	try {
 		const buttonStart = document.querySelector('#buttonStart')
 		const buttonStop = document.querySelector('#buttonStop')
 		const audio = document.querySelector('#audio')
-		const logArea = document.querySelector('#log')
 
 		const stream = await navigator.mediaDevices.getUserMedia({ // <1>
 			vide: false,
@@ -29,6 +29,7 @@ async function main() {
 		audioRecorder.connect(audioContext.destination)
 
 		buttonStart.addEventListener('click', event => {
+			logArea.textContent = 'click start'
 			try {
 				buttonStart.setAttribute('disabled', 'disabled')
 				buttonStop.removeAttribute('disabled')
@@ -45,6 +46,7 @@ async function main() {
 		})
 
 		buttonStop.addEventListener('click', event => {
+			logArea.textContent = 'click stop'
 			try {
 				buttonStop.setAttribute('disabled', 'disabled')
 				buttonStart.removeAttribute('disabled')
