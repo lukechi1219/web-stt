@@ -61,7 +61,7 @@ async function main() {
 
 			} catch (err) {
 				console.error(err)
-				logArea.textContent = err
+				logArea.textContent = err.stack
 			}
 		})
 	} catch (err) {
