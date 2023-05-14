@@ -6,22 +6,22 @@ function encodeAudio(buffers, settings) {
 		settings.sampleSize = 16
 	}
 
-	logArea.textContent += 'Encoding audio...'
-	logArea.textContent += 'buffer.length: ' + buffers.length
-	logArea.textContent += 'settings: ' + JSON.stringify(settings)
+	logArea.textContent += '\r\n' + 'Encoding audio...'
+	logArea.textContent += '\r\n' + 'buffer.length: ' + buffers.length
+	logArea.textContent += '\r\n' + 'settings: ' + JSON.stringify(settings)
 
 	const sampleCount = buffers.reduce((memo, buffer) => {
 		return memo + buffer.length
 	}, 0)
 
-	logArea.textContent += 'sampleCount: ' + sampleCount
+	logArea.textContent += '\r\n' + 'sampleCount: ' + sampleCount
 
 	const bytesPerSample = settings.sampleSize / 8
 	const bitsPerByte = 8
 	const dataLength = sampleCount * bytesPerSample
 	const sampleRate = settings.sampleRate
 
-	logArea.textContent += 'dataLength: ' + dataLength
+	logArea.textContent += '\r\n' + 'dataLength: ' + dataLength
 
 	const arrayBuffer = new ArrayBuffer(44 + dataLength)
 

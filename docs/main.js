@@ -13,6 +13,8 @@ async function main() {
 		const [track] = stream.getAudioTracks()
 		const settings = track.getSettings() // <2>
 
+		logArea.textContent += '\r\n' + JSON.stringify(track.getCapabilities())
+
 		const audioContext = new AudioContext()
 		await audioContext.audioWorklet.addModule('audio-recorder.js') // <3>
 
@@ -29,7 +31,7 @@ async function main() {
 		audioRecorder.connect(audioContext.destination)
 
 		buttonStart.addEventListener('click', event => {
-			logArea.textContent += 'click start'
+			logArea.textContent += '\r\n' + 'click start'
 			try {
 				buttonStart.setAttribute('disabled', 'disabled')
 				buttonStop.removeAttribute('disabled')
@@ -41,12 +43,12 @@ async function main() {
 
 			} catch (err) {
 				console.error(err)
-				logArea.textContent += err.message
+				logArea.textContent += '\r\n' + err.message
 			}
 		})
 
 		buttonStop.addEventListener('click', event => {
-			logArea.textContent += 'click stop'
+			logArea.textContent += '\r\n' + 'click stop'
 			try {
 				buttonStop.setAttribute('disabled', 'disabled')
 				buttonStart.removeAttribute('disabled')
@@ -61,12 +63,12 @@ async function main() {
 
 			} catch (err) {
 				console.error(err)
-				logArea.textContent += err.message
+				logArea.textContent += '\r\n' + err.message
 			}
 		})
 	} catch (err) {
 		console.error(err)
-		logArea.textContent += err.message
+		logArea.textContent += '\r\n' + err.message
 	}
 }
 
