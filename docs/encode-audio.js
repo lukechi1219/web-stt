@@ -1,7 +1,15 @@
 function encodeAudio(buffers, settings) {
+
+	const logArea = document.querySelector('#log')
+
+	logArea.textContent += 'Encoding audio...'
+	logArea.textContent += 'buffer.length: ' + buffers.length
+
 	const sampleCount = buffers.reduce((memo, buffer) => {
 		return memo + buffer.length
 	}, 0)
+
+	logArea.textContent += 'sampleCount: ' + sampleCount
 
 	const bytesPerSample = settings.sampleSize / 8
 	const bitsPerByte = 8
@@ -9,6 +17,7 @@ function encodeAudio(buffers, settings) {
 	const sampleRate = settings.sampleRate
 
 	const arrayBuffer = new ArrayBuffer(44 + dataLength)
+
 	const dataView = new DataView(arrayBuffer)
 
 	dataView.setUint8(0, 'R'.charCodeAt(0)) // <10>
@@ -40,8 +49,11 @@ function encodeAudio(buffers, settings) {
 	let index = 44
 
 	for (const buffer of buffers) {
+
 		for (const value of buffer) {
+
 			dataView.setInt16(index, value * 0x7fff, true)
+
 			index += 2
 		}
 	}
