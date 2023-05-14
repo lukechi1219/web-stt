@@ -2,6 +2,10 @@ function encodeAudio(buffers, settings) {
 
 	const logArea = document.querySelector('#log')
 
+	if (typeof settings.sampleSize === 'undefined' || settings.sampleSize !== 16) {
+		settings.sampleSize = 16
+	}
+
 	logArea.textContent += 'Encoding audio...'
 	logArea.textContent += 'buffer.length: ' + buffers.length
 	logArea.textContent += 'settings: ' + JSON.stringify(settings)
@@ -28,6 +32,7 @@ function encodeAudio(buffers, settings) {
 	dataView.setUint8(2, 'F'.charCodeAt(0))
 	dataView.setUint8(3, 'F'.charCodeAt(0))
 	dataView.setUint32(4, 36 + dataLength, true)
+
 	dataView.setUint8(8, 'W'.charCodeAt(0))
 	dataView.setUint8(9, 'A'.charCodeAt(0))
 	dataView.setUint8(10, 'V'.charCodeAt(0))
@@ -37,6 +42,7 @@ function encodeAudio(buffers, settings) {
 	dataView.setUint8(14, 't'.charCodeAt(0))
 	dataView.setUint8(15, ' '.charCodeAt(0))
 	dataView.setUint32(16, 16, true)
+
 	dataView.setUint16(20, 1, true)
 	dataView.setUint16(22, 1, true)
 	dataView.setUint32(24, sampleRate, true)
