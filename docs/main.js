@@ -3,6 +3,7 @@ async function main() {
 		const buttonStart = document.querySelector('#buttonStart')
 		const buttonStop = document.querySelector('#buttonStop')
 		const audio = document.querySelector('#audio')
+		const logArea = document.querySelector('#log')
 
 		const stream = await navigator.mediaDevices.getUserMedia({ // <1>
 			vide: false,
@@ -28,29 +29,42 @@ async function main() {
 		audioRecorder.connect(audioContext.destination)
 
 		buttonStart.addEventListener('click', event => {
-			buttonStart.setAttribute('disabled', 'disabled')
-			buttonStop.removeAttribute('disabled')
+			try {
+				buttonStart.setAttribute('disabled', 'disabled')
+				buttonStop.removeAttribute('disabled')
 
-			const parameter = audioRecorder.parameters.get('isRecording')
-			parameter.setValueAtTime(1, audioContext.currentTime) // <9>
+				const parameter = audioRecorder.parameters.get('isRecording')
+				parameter.setValueAtTime(1, audioContext.currentTime) // <9>
 
-			buffers.splice(0, buffers.length)
+				buffers.splice(0, buffers.length)
+
+			} catch (err) {
+				console.error(err)
+				logArea.textContent = err.message
+			}
 		})
 
 		buttonStop.addEventListener('click', event => {
-			buttonStop.setAttribute('disabled', 'disabled')
-			buttonStart.removeAttribute('disabled')
+			try {
+				buttonStop.setAttribute('disabled', 'disabled')
+				buttonStart.removeAttribute('disabled')
 
-			const parameter = audioRecorder.parameters.get('isRecording')
-			parameter.setValueAtTime(0, audioContext.currentTime) // <10>
+				const parameter = audioRecorder.parameters.get('isRecording')
+				parameter.setValueAtTime(0, audioContext.currentTime) // <10>
 
-			const blob = encodeAudio(buffers, settings) // <11>
-			const url = URL.createObjectURL(blob)
+				const blob = encodeAudio(buffers, settings) // <11>
+				const url = URL.createObjectURL(blob)
 
-			audio.src = url
+				audio.src = url
+
+			} catch (err) {
+				console.error(err)
+				logArea.textContent = err.message
+			}
 		})
 	} catch (err) {
 		console.error(err)
+		logArea.textContent = err.message
 	}
 }
 
